@@ -1,0 +1,7 @@
+INVOICE
+Invoice Number: INV-204
+Vendor: ABC Technologies
+Invoice Date: 2026-10-01
+Total Amount Due: Rs 1,25,000
+Due Date: 30 October 2026
+Payment terms: Net 30

@@ -1,0 +1,6 @@
+INVOICE
+Invoice Number: INV-702
+Vendor: Acme Logistics Ltd
+Invoice Date: 2026-09-12
+Total Amount Due: Rs 55,000
+Due Date: 12 October 2026

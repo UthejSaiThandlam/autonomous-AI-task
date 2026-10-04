@@ -1,0 +1,7 @@
+INVOICE
+Invoice Number: INV-198
+Vendor: ABC Technologies
+Invoice Date: 2026-08-05
+Total Amount Due: Rs 110,000
+Due Date: 04 September 2026
+Payment terms: Net 30

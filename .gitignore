@@ -1,0 +1,33 @@
+# Environment variables and secrets
+.env
+*.env
+**/.env
+**/*.env
+
+# SQLite databases
+*.db
+**/*.db
+worker.db
+test.db
+
+# Evidence screenshots & media
+screenshots/
+**/screenshots/
+dist/
+**/dist/
+
+# Dependencies
+node_modules/
+**/node_modules/
+.venv/
+**/.venv/
+env/
+venv/
+
+# Python cache & pytest
+__pycache__/
+**/__pycache__/
+*.pyc
+**/*.pyc
+.pytest_cache/
+**/.pytest_cache/

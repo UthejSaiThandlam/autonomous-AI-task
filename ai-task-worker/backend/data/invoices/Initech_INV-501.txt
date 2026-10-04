@@ -1,0 +1,7 @@
+INVOICE
+Invoice Number: INV-501
+Vendor: Initech
+Invoice Date: 2026-09-15
+Total Amount Due: Rs 62,000
+Payment terms: Net 30
+Notice: Due Date is missing from billing document.

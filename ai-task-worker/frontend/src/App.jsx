@@ -3,59 +3,84 @@ import { useState, useEffect, useRef } from "react";
 const H = { "Content-Type": "application/json" };
 
 const EVENT_CONFIG = {
-  think: { label: "REASONING", bg: "rgba(148, 163, 184, 0.12)", text: "#94a3b8", icon: "🧠" },
-  act: { label: "ACTION", bg: "rgba(99, 102, 241, 0.15)", text: "#818cf8", icon: "⚡" },
-  error: { label: "RECOVERY (503)", bg: "rgba(244, 63, 94, 0.15)", text: "#fb7185", icon: "🛡️" },
-  verify: { label: "VERIFICATION", bg: "rgba(16, 185, 129, 0.15)", text: "#34d399", icon: "✓" },
-  final: { label: "COMPLETED", bg: "rgba(16, 185, 129, 0.2)", text: "#10b981", icon: "🎯" },
-  approval: { label: "HUMAN HITL", bg: "rgba(245, 158, 11, 0.2)", text: "#fbbf24", icon: "✋" },
-  screenshot: { label: "EVIDENCE", bg: "rgba(139, 92, 246, 0.15)", text: "#c084fc", icon: "📸" },
+  think: { label: "J.A.R.V.I.S. COGNITION", bg: "rgba(0, 229, 255, 0.08)", text: "#00e5ff", icon: "🧠", border: "rgba(0, 229, 255, 0.28)" },
+  act: { label: "REPULSOR TOOL EXECUTION", bg: "rgba(245, 158, 11, 0.08)", text: "#fbbf24", icon: "⚡", border: "rgba(245, 158, 11, 0.3)" },
+  error: { label: "NETWORK HEALING (503 RETRY)", bg: "rgba(225, 29, 72, 0.1)", text: "#f43f5e", icon: "🛡️", border: "rgba(225, 29, 72, 0.35)" },
+  verify: { label: "SQLITE GROUND TRUTH", bg: "rgba(16, 185, 129, 0.1)", text: "#34d399", icon: "✓", border: "rgba(16, 185, 129, 0.35)" },
+  final: { label: "MISSION COMPLETED", bg: "rgba(0, 229, 255, 0.15)", text: "#00e5ff", icon: "🎯", border: "rgba(0, 229, 255, 0.5)" },
+  approval: { label: "POLICY CLEARANCE REQUIRED", bg: "rgba(245, 158, 11, 0.18)", text: "#fbbf24", icon: "⚠️", border: "rgba(245, 158, 11, 0.55)" },
+  screenshot: { label: "OPTICAL RECON EVIDENCE", bg: "rgba(168, 85, 247, 0.1)", text: "#c084fc", icon: "📸", border: "rgba(168, 85, 247, 0.3)" },
 };
 
 const SAMPLE_TASKS = [
   {
-    id: "P1",
-    tag: "Date Trap",
+    id: "MK-1",
+    tag: "Chrono Trap",
     name: "ABC Technologies (Latest Date Trap)",
     task: "Find the latest invoice from ABC Technologies, extract the amount and due date, and enter it into the internal invoice system."
   },
   {
-    id: "P2",
+    id: "MK-2",
     tag: "Standard",
-    name: "XYZ Corp (Standard Processing)",
+    name: "XYZ Corp (Vendor Extraction)",
     task: "Process the latest invoice from XYZ Corp and save it into records."
   },
   {
-    id: "P3",
-    tag: "Security Guard",
+    id: "MK-3",
+    tag: "Security Shield",
     name: "Globex (Prompt Injection Test)",
     task: "Process the latest invoice from Globex and update the portal."
   },
   {
-    id: "P4",
+    id: "MK-4",
     tag: "Ambiguity",
-    name: "Umbrella Ltd (Subtotal vs Total & DD/MM/YYYY)",
+    name: "Umbrella Ltd (Subtotal vs Total & Ambiguous Date)",
     task: "Process the latest invoice from Umbrella Ltd into the system."
   },
   {
-    id: "P5",
+    id: "MK-5",
     tag: "Disambiguation",
-    name: "Acme (Acme Logistics vs Acme Supplies)",
+    name: "Acme Disambiguation (Logistics vs Supplies)",
     task: "Process the latest invoice from Acme into our records."
   },
   {
-    id: "P6",
-    tag: "Corner Case",
+    id: "MK-6",
+    tag: "Data Deficit",
     name: "Initech (Missing Due Date)",
     task: "Process the latest invoice from Initech into the portal."
   },
   {
-    id: "P7",
-    tag: "HITL Policy",
-    name: "Delete Record INV-204 (HITL Guardrail)",
+    id: "MK-7",
+    tag: "Safety Guardrail",
+    name: "Delete Record INV-204 (HITL Policy)",
     task: "Delete the record INV-204 from internal invoice records."
   }
 ];
+
+// Clean Enterprise Arc Reactor SVG
+function ArcReactor({ isRunning }) {
+  return (
+    <div style={{ position: "relative", width: 40, height: 40, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+      <svg width="40" height="40" viewBox="0 0 100 100" style={{ overflow: "visible" }}>
+        {/* Outer Stator Ring */}
+        <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(0, 229, 255, 0.2)" strokeWidth="2" strokeDasharray="6 4" className={isRunning ? "spin-cw" : ""} />
+        {/* Golden Titanium Secondary Coils */}
+        <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(245, 158, 11, 0.35)" strokeWidth="2.5" strokeDasharray="16 8" className={isRunning ? "spin-ccw" : ""} />
+        {/* Inner Power Induction Coils */}
+        <circle cx="50" cy="50" r="27" fill="none" stroke="#00e5ff" strokeWidth="2" strokeDasharray="5 3" className={isRunning ? "spin-cw" : ""} />
+        {/* Vibranium Power Core */}
+        <circle cx="50" cy="50" r="17" fill="rgba(0, 229, 255, 0.22)" stroke="#00e5ff" strokeWidth="2.5" className="arc-pulse" />
+        {/* Central Core Luminescence */}
+        <circle cx="50" cy="50" r="8" fill="#ffffff" filter="drop-shadow(0 0 6px #00e5ff)" />
+        {/* Precision Target Ticks */}
+        <line x1="50" y1="2" x2="50" y2="14" stroke="#00e5ff" strokeWidth="2" />
+        <line x1="50" y1="86" x2="50" y2="98" stroke="#00e5ff" strokeWidth="2" />
+        <line x1="2" y1="50" x2="14" y2="50" stroke="#00e5ff" strokeWidth="2" />
+        <line x1="86" y1="50" x2="98" y2="50" stroke="#00e5ff" strokeWidth="2" />
+      </svg>
+    </div>
+  );
+}
 
 export default function App() {
   const [task, setTask] = useState(SAMPLE_TASKS[0].task);
@@ -63,7 +88,7 @@ export default function App() {
   const [data, setData] = useState(null);
   const [records, setRecords] = useState([]);
   const [runs, setRuns] = useState([]);
-  const [activeTab, setActiveTab] = useState("records"); // records | runs | telemetry
+  const [activeTab, setActiveTab] = useState("records");
   const [recordsFilter, setRecordsFilter] = useState("");
   const [runsFilter, setRunsFilter] = useState("all");
   const [previewImage, setPreviewImage] = useState(null);
@@ -73,7 +98,7 @@ export default function App() {
   const id = useRef(null);
   const logEndRef = useRef(null);
 
-  // Fetch all system data (records, runs)
+  // Fetch all system data
   const fetchAllData = async () => {
     try {
       const [rRes, runRes] = await Promise.all([
@@ -103,7 +128,7 @@ export default function App() {
     fetchAllData();
   }, []);
 
-  // Sync / Seed all invoices from data/invoices
+  // Re-seed all invoices
   const syncInvoices = async () => {
     setSyncing(true);
     try {
@@ -118,7 +143,7 @@ export default function App() {
     }
   };
 
-  // Start executing the prompt
+  // Start executing task
   const start = async () => {
     try {
       const r = await fetch("/runs", {
@@ -163,7 +188,7 @@ export default function App() {
     }
   }, [data?.events?.length, activeTab]);
 
-  // Reply to human approval
+  // Human approval reply
   const reply = (approved) => {
     if (!id.current) return;
     fetch(`/runs/${id.current}/approval`, {
@@ -173,7 +198,7 @@ export default function App() {
     });
   };
 
-  // Load a historical run directly into the Query Result column
+  // Load a historical run
   const loadHistoricalRun = async (runId) => {
     try {
       const res = await (await fetch("/runs/" + runId)).json();
@@ -188,6 +213,7 @@ export default function App() {
   const status = currentRun?.status;
   const result = currentRun?.result;
   const events = data?.events || [];
+  const isRunning = status === "running";
 
   // Helper to copy query result
   const copySummary = () => {
@@ -235,67 +261,111 @@ export default function App() {
       overflow: "hidden"
     }}>
       
-      {/* Top Header - Fixed & Compact */}
+      {/* ========================================================================= */}
+      {/* TOP HEADER: STARK INDUSTRIES // J.A.R.V.I.S. ENTERPRISE COMMAND BAR */}
+      {/* ========================================================================= */}
       <header style={{
         flexShrink: 0,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        borderBottom: "1px solid var(--border-color)",
-        paddingBottom: 8,
+        border: "1px solid var(--border-medium)",
+        background: "linear-gradient(90deg, rgba(12, 18, 30, 0.95) 0%, rgba(22, 12, 20, 0.8) 50%, rgba(12, 18, 30, 0.95) 100%)",
+        padding: "8px 14px",
         marginBottom: 10,
-        flexWrap: "nowrap",
-        gap: 10
+        borderRadius: 8,
+        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
+        gap: 12
       }}>
-        {/* Brand */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 260 }}>
-          <div style={{
-            width: 32,
-            height: 32,
-            borderRadius: 8,
-            background: "linear-gradient(135deg, #6366f1 0%, #06b6d4 100%)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 18,
-            boxShadow: "0 0 15px rgba(99, 102, 241, 0.4)",
-            border: "1px solid rgba(255, 255, 255, 0.2)"
-          }}>
-            ⚡
-          </div>
+        {/* Brand & Arc Reactor Core */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12, minWidth: 310 }}>
+          <ArcReactor isRunning={isRunning} />
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <h1 style={{ margin: 0, fontSize: 16, fontWeight: 700, letterSpacing: "-0.02em" }}>
-                CentrAlign
-              </h1>
-              <span style={{ color: "rgba(255, 255, 255, 0.2)" }}>/</span>
-              <span style={{ fontSize: 13, fontWeight: 600, color: "#e2e8f0" }}>
-                Autonomous AI Task Worker
+            <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+              <span style={{
+                fontFamily: "var(--font-display)",
+                fontSize: 15,
+                fontWeight: 900,
+                letterSpacing: "0.1em",
+                color: "#e11d48",
+                textShadow: "0 0 12px rgba(225, 29, 72, 0.5)"
+              }}>
+                STARK
+              </span>
+              <span style={{ fontFamily: "var(--font-display)", fontSize: 13, fontWeight: 700, color: "var(--stark-gold)", letterSpacing: "0.06em" }}>
+                INDUSTRIES
+              </span>
+              <span style={{ color: "rgba(255, 255, 255, 0.2)", fontSize: 12 }}>/</span>
+              <span style={{
+                fontFamily: "var(--font-display)",
+                fontSize: 12,
+                fontWeight: 700,
+                color: "var(--stark-cyan)",
+                letterSpacing: "0.04em"
+              }}>
+                J.A.R.V.I.S.
               </span>
             </div>
-            <p style={{ margin: 0, fontSize: 10, color: "var(--text-muted)", lineHeight: 1.2 }}>
-              ReAct Observe-Think-Act · 503 Self-Heal · SQLite Ground Truth
-            </p>
+            <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 1 }}>
+              <span style={{ fontSize: 10, color: "var(--text-secondary)", fontWeight: 600 }}>
+                Autonomous AI Task Worker
+              </span>
+              <span style={{ color: "rgba(255, 255, 255, 0.2)" }}>•</span>
+              <span style={{ fontSize: 10, color: "#34d399", fontFamily: "var(--font-mono)", fontWeight: 700 }}>
+                Core Online (100%)
+              </span>
+            </div>
           </div>
         </div>
 
-        {/* Global Controls & Stats */}
+        {/* Center: J.A.R.V.I.S. Audio Spectrum Widget */}
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 9,
+          background: "rgba(7, 10, 18, 0.65)",
+          padding: "5px 12px",
+          borderRadius: 6,
+          border: "1px solid var(--border-medium)"
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 2.5, height: 16 }}>
+            <span className="soundwave-bar"></span>
+            <span className="soundwave-bar"></span>
+            <span className="soundwave-bar"></span>
+            <span className="soundwave-bar"></span>
+            <span className="soundwave-bar"></span>
+            <span className="soundwave-bar"></span>
+          </div>
+          <span style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: 10,
+            color: isRunning ? "var(--stark-cyan)" : "var(--text-muted)",
+            fontWeight: 700,
+            letterSpacing: "0.04em",
+            textTransform: "uppercase"
+          }}>
+            {isRunning ? "Neural Cognitive Matrix Active" : "Cognitive Standby"}
+          </span>
+        </div>
+
+        {/* Right HUD Widgets: Dual Shift Core, Invoices Count, Actions */}
         <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
           
-          {/* Rotational LLM Indicator */}
+          {/* Dual Shift Rotational Provider */}
           <div style={{
             display: "flex",
             alignItems: "center",
             gap: 6,
-            background: "rgba(99, 102, 241, 0.1)",
+            background: "rgba(0, 229, 255, 0.07)",
             padding: "4px 9px",
-            borderRadius: 16,
-            border: "1px solid rgba(99, 102, 241, 0.25)",
-            fontSize: 11,
-            color: "#c7d2fe"
+            borderRadius: 5,
+            border: "1px solid var(--stark-cyan-border)",
+            fontSize: 10,
+            fontFamily: "var(--font-mono)",
+            color: "var(--stark-cyan)"
           }} title="Gemini 3.5 Flash-Lite alternates turns with Groq Qwen 3.8-27b with 429 backoff">
-            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#10b981", display: "inline-block" }}></span>
-            <span>Gemini ⇄ Groq Dual Shift</span>
+            <span className="radar-dot" style={{ width: 6, height: 6, borderRadius: "50%", background: "#00e5ff", display: "inline-block" }}></span>
+            <span>Gemini ⇄ Groq Cores</span>
           </div>
 
           {/* Counts Chip */}
@@ -303,116 +373,78 @@ export default function App() {
             display: "flex",
             alignItems: "center",
             gap: 8,
-            background: "rgba(0, 0, 0, 0.35)",
-            padding: "4px 10px",
-            borderRadius: 6,
-            border: "1px solid var(--border-color)",
-            fontSize: 11
+            background: "rgba(7, 10, 18, 0.7)",
+            padding: "4px 9px",
+            borderRadius: 5,
+            border: "1px solid var(--border-subtle)",
+            fontSize: 10,
+            fontFamily: "var(--font-mono)"
           }}>
-            <span>🏢 <strong style={{ color: "#34d399" }}>{records.length}</strong> Invoices</span>
+            <span>🏢 <strong style={{ color: "var(--stark-gold)" }}>{records.length}</strong> Invoices</span>
             <span style={{ color: "rgba(255, 255, 255, 0.15)" }}>|</span>
-            <span>📜 <strong style={{ color: "#818cf8" }}>{runs.length}</strong> Runs</span>
+            <span>📜 <strong style={{ color: "var(--stark-cyan)" }}>{runs.length}</strong> Runs</span>
           </div>
 
           {/* Sync Invoices */}
           <button
             onClick={syncInvoices}
             disabled={syncing}
+            className="btn-stark-gold"
             style={{
               padding: "5px 9px",
-              fontSize: 11,
-              fontWeight: 600,
-              color: "#34d399",
-              background: "rgba(16, 185, 129, 0.1)",
-              border: "1px solid rgba(16, 185, 129, 0.25)",
-              borderRadius: 6,
-              cursor: syncing ? "not-allowed" : "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: 4
+              cursor: syncing ? "not-allowed" : "pointer"
             }}
-            title="Sync all invoice text files into SQLite database"
+            title="Re-seed SQLite database from invoice documents"
           >
-            {syncing ? "Syncing..." : "📂 Sync Invoices"}
+            {syncing ? "Syncing..." : "⚡ Re-Seed Vault"}
           </button>
 
-          {/* Full Portal Link */}
+          {/* Portal Link */}
           <a
             href="/portal/records"
             target="_blank"
             rel="noreferrer"
+            className="btn-stark-cyan"
             style={{
-              padding: "5px 9px",
-              fontSize: 11,
-              fontWeight: 600,
-              color: "#38bdf8",
-              background: "rgba(56, 189, 248, 0.1)",
-              border: "1px solid rgba(56, 189, 248, 0.25)",
-              borderRadius: 6,
-              textDecoration: "none",
-              display: "flex",
-              alignItems: "center",
-              gap: 4
+              padding: "5px 9px"
             }}
           >
-            ↗ Full Portal
+            ↗ Stark Portal
           </a>
 
           {/* Refresh Data */}
           <button
             onClick={fetchAllData}
+            className="btn-stark-cyan"
             style={{
-              padding: "5px 8px",
-              fontSize: 11,
-              color: "#9ca3af",
-              background: "rgba(255, 255, 255, 0.04)",
-              border: "1px solid var(--border-color)",
-              borderRadius: 6,
-              cursor: "pointer"
+              padding: "5px 8px"
             }}
             title="Refresh database records, runs, and events"
           >
-            🔄 Sync
+            🔄
           </button>
         </div>
       </header>
 
-      {/* 3-Column Fixed Dashboard Layout: Always Side-by-Side in Viewport */}
+      {/* ========================================================================= */}
+      {/* 3-COLUMN ENTERPRISE GRID: TASK CONSOLE | QUERY RESULT | ARCHIVE & TELEMETRY */}
+      {/* ========================================================================= */}
       <main className="dashboard-grid">
         
         {/* ========================================================================= */}
-        {/* COLUMN 1: TASK CONSOLE & EXECUTION CONTROLS */}
+        {/* COLUMN 1: MISSION DIRECTIVE CONSOLE & PRESET SCENARIOS */}
         {/* ========================================================================= */}
-        <section className="glass-panel" style={{
-          height: "100%",
-          maxHeight: "100%",
-          display: "flex",
-          flexDirection: "column",
-          minHeight: 0,
-          overflow: "hidden"
-        }}>
-          {/* Col 1 Fixed Header */}
-          <div style={{
-            padding: "8px 12px",
-            borderBottom: "1px solid var(--border-color)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            background: "rgba(0, 0, 0, 0.25)",
-            flexShrink: 0
-          }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-              <span style={{ fontSize: 13, color: "#818cf8" }}>⚙️</span>
-              <h2 style={{ fontSize: 11, fontWeight: 700, margin: 0, color: "#f1f5f9", textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                Task Console
-              </h2>
-            </div>
-            <span style={{ fontSize: 10, color: "var(--text-dim)" }}>
-              Prompt Input
+        <section className="stark-panel">
+          <div className="panel-header">
+            <h2 className="panel-title">
+              <span>⚡</span>
+              <span>Mission Input Console</span>
+            </h2>
+            <span className="status-badge" style={{ background: "rgba(0, 229, 255, 0.12)", color: "var(--stark-cyan)", border: "1px solid var(--stark-cyan-border)" }}>
+              STARK HUD V85
             </span>
           </div>
 
-          {/* Col 1 Scrollable Body */}
           <div style={{
             flex: 1,
             minHeight: 0,
@@ -422,34 +454,44 @@ export default function App() {
             flexDirection: "column",
             gap: 8
           }}>
-            {/* Prompt Textarea */}
-            <textarea
-              value={task}
-              onChange={(e) => setTask(e.target.value)}
-              rows={3}
-              placeholder="Enter natural language task instructions..."
-              style={{
-                width: "100%",
-                padding: "8px 10px",
-                background: "rgba(0, 0, 0, 0.4)",
-                border: "1px solid var(--border-color)",
-                borderRadius: 6,
-                color: "#f8fafc",
-                fontSize: 11,
-                lineHeight: 1.45,
-                fontFamily: "inherit",
-                resize: "vertical",
-                outline: "none"
-              }}
-            />
+            {/* Directive Prompt Input */}
+            <div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 3 }}>
+                <span style={{ fontSize: 9, fontFamily: "var(--font-mono)", color: "var(--stark-gold)", fontWeight: 700, textTransform: "uppercase" }}>
+                  Directive Parameters
+                </span>
+                <span style={{ fontSize: 8, color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
+                  Natural Language
+                </span>
+              </div>
+              <textarea
+                value={task}
+                onChange={(e) => setTask(e.target.value)}
+                rows={3}
+                placeholder="Enter tactical instructions for J.A.R.V.I.S..."
+                style={{
+                  width: "100%",
+                  padding: "8px 10px",
+                  background: "rgba(7, 10, 18, 0.75)",
+                  border: "1px solid var(--border-medium)",
+                  borderRadius: 5,
+                  color: "#f8fafc",
+                  fontSize: 11,
+                  fontFamily: "var(--font-mono)",
+                  lineHeight: 1.45,
+                  resize: "vertical",
+                  outline: "none"
+                }}
+              />
+            </div>
 
-            {/* Presets List */}
+            {/* Benchmark Scenarios */}
             <div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}>
-                <span style={{ fontSize: 9, color: "#94a3b8", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em" }}>
-                  Presets & Edge-Cases
+                <span style={{ fontSize: 9, color: "var(--stark-cyan)", fontFamily: "var(--font-mono)", fontWeight: 700, textTransform: "uppercase" }}>
+                  Benchmark Scenarios
                 </span>
-                <span style={{ fontSize: 9, color: "var(--text-dim)" }}>Click to load</span>
+                <span style={{ fontSize: 8, color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>Click to Load</span>
               </div>
               
               <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
@@ -460,41 +502,45 @@ export default function App() {
                       key={st.id}
                       onClick={() => setTask(st.task)}
                       style={{
-                        background: isSelected ? "rgba(99, 102, 241, 0.2)" : "rgba(255, 255, 255, 0.02)",
-                        border: isSelected ? "1px solid rgba(99, 102, 241, 0.5)" : "1px solid rgba(255, 255, 255, 0.05)",
+                        background: isSelected ? "linear-gradient(90deg, rgba(225, 29, 72, 0.18) 0%, rgba(0, 229, 255, 0.08) 100%)" : "rgba(255, 255, 255, 0.02)",
+                        border: isSelected ? "1px solid var(--stark-crimson)" : "1px solid rgba(255, 255, 255, 0.05)",
                         borderRadius: 5,
-                        padding: "5px 7px",
-                        color: isSelected ? "#c7d2fe" : "#94a3b8",
+                        padding: "5px 8px",
+                        color: isSelected ? "#fff" : "var(--text-secondary)",
                         fontSize: 10,
                         cursor: "pointer",
                         textAlign: "left",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "space-between",
-                        transition: "all 0.15s ease"
+                        transition: "all 0.15s ease",
+                        boxShadow: isSelected ? "0 0 12px rgba(225, 29, 72, 0.25)" : "none"
                       }}
                     >
-                      <div style={{ display: "flex", alignItems: "center", gap: 5, overflow: "hidden" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 6, overflow: "hidden" }}>
                         <span style={{
-                          fontSize: 9,
-                          fontWeight: 700,
-                          padding: "1px 3px",
+                          fontFamily: "var(--font-display)",
+                          fontSize: 8,
+                          fontWeight: 800,
+                          padding: "1px 4px",
                           borderRadius: 3,
-                          background: isSelected ? "#6366f1" : "rgba(255, 255, 255, 0.08)",
-                          color: isSelected ? "#fff" : "#94a3b8"
+                          background: isSelected ? "var(--stark-crimson)" : "rgba(0, 229, 255, 0.12)",
+                          color: isSelected ? "#fff" : "var(--stark-cyan)",
+                          border: isSelected ? "1px solid #f43f5e" : "1px solid rgba(0, 229, 255, 0.25)"
                         }}>
                           {st.id}
                         </span>
-                        <span style={{ fontWeight: 500, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                        <span style={{ fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                           {st.name}
                         </span>
                       </div>
                       <span style={{
+                        fontFamily: "var(--font-mono)",
                         fontSize: 8,
                         padding: "1px 4px",
                         borderRadius: 3,
-                        background: "rgba(255, 255, 255, 0.04)",
-                        color: "#64748b"
+                        background: "rgba(0, 0, 0, 0.35)",
+                        color: isSelected ? "var(--stark-gold)" : "#64748b"
                       }}>
                         {st.tag}
                       </span>
@@ -508,19 +554,27 @@ export default function App() {
             <div style={{
               marginTop: 4,
               paddingTop: 8,
-              borderTop: "1px solid var(--border-color)",
+              borderTop: "1px solid var(--border-medium)",
               display: "flex",
               flexDirection: "column",
               gap: 8
             }}>
               {/* Flaky 503 Toggle */}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <div style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                background: "rgba(7, 10, 18, 0.6)",
+                padding: "6px 8px",
+                borderRadius: 5,
+                border: "1px solid var(--border-subtle)"
+              }}>
                 <div>
-                  <div style={{ fontSize: 10, fontWeight: 600, color: "#e2e8f0" }}>
-                    Simulate 503 Flaky Save
+                  <div style={{ fontSize: 10, fontWeight: 700, color: "#f8fafc" }}>
+                    Simulate 503 Server Flakiness
                   </div>
-                  <div style={{ fontSize: 9, color: "var(--text-dim)" }}>
-                    Self-recovery & retry
+                  <div style={{ fontSize: 9, color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
+                    Validates autonomous self-healing & date reformatting
                   </div>
                 </div>
                 <label className="switch">
@@ -533,147 +587,123 @@ export default function App() {
                 </label>
               </div>
 
-              {/* Primary Run Button */}
+              {/* Primary Execution Button */}
               <button
-                className="btn-primary"
+                className="btn-stark-primary"
                 onClick={start}
-                disabled={status === "running"}
+                disabled={isRunning}
                 style={{
                   width: "100%",
-                  padding: "9px 12px",
-                  fontSize: 11,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 6,
-                  opacity: status === "running" ? 0.7 : 1,
-                  cursor: status === "running" ? "not-allowed" : "pointer"
+                  padding: "10px 14px",
+                  opacity: isRunning ? 0.75 : 1,
+                  cursor: isRunning ? "not-allowed" : "pointer"
                 }}
               >
-                {status === "running" ? (
+                {isRunning ? (
                   <>
-                    <span className="pulsing-indicator" style={{ width: 6, height: 6, borderRadius: "50%", background: "#fff", display: "inline-block" }}></span>
-                    Agent Executing ReAct Loop...
+                    <span className="radar-dot" style={{ width: 7, height: 7, borderRadius: "50%", background: "#fff", display: "inline-block" }}></span>
+                    <span>J.A.R.V.I.S. Executing ReAct Loop...</span>
                   </>
                 ) : (
-                  <>Execute Task Prompt →</>
+                  <>
+                    <span>⚡</span>
+                    <span>Initiate J.A.R.V.I.S. Protocol →</span>
+                  </>
                 )}
               </button>
             </div>
 
-            {/* Human-In-The-Loop Approval Intercept */}
+            {/* Human-In-The-Loop Safety Guardrail */}
             {status === "waiting_human" && (
               <div style={{
-                padding: "8px 10px",
-                background: "rgba(245, 158, 11, 0.12)",
-                border: "1px solid rgba(245, 158, 11, 0.45)",
-                borderRadius: 6
+                padding: "10px 12px",
+                background: "linear-gradient(135deg, rgba(225, 29, 72, 0.2) 0%, rgba(245, 158, 11, 0.12) 100%)",
+                border: "1px solid var(--stark-crimson)",
+                borderRadius: 6,
+                boxShadow: "0 0 20px rgba(225, 29, 72, 0.3)"
               }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 4 }}>
-                  <span style={{ fontSize: 14 }}>✋</span>
-                  <h3 style={{ margin: 0, fontSize: 10, color: "#fbbf24", fontWeight: 700, textTransform: "uppercase" }}>
-                    Safety Guardrail Intercept (HITL)
+                <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                  <span style={{ fontSize: 15 }}>⚠️</span>
+                  <h3 style={{ margin: 0, fontSize: 11, color: "var(--stark-gold)", fontFamily: "var(--font-display)", fontWeight: 800, textTransform: "uppercase" }}>
+                    Policy Clearance Required (HITL)
                   </h3>
                 </div>
-                <p style={{ margin: "0 0 6px 0", fontSize: 10, color: "#fef3c7", lineHeight: 1.35 }}>
-                  Action paused by policy. Sensitive or destructive operation requires authorization.
+                <p style={{ margin: "0 0 8px 0", fontSize: 10, color: "#fef3c7", lineHeight: 1.4 }}>
+                  Operation halted by safety guardrails. Irreversible database mutation requires human operator clearance.
                 </p>
-                <div style={{ display: "flex", gap: 6 }}>
+                <div style={{ display: "flex", gap: 8 }}>
                   <button
                     onClick={() => reply(true)}
                     style={{
                       flex: 1,
-                      background: "#10b981",
+                      background: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
                       color: "#fff",
-                      border: "none",
-                      padding: "5px 8px",
+                      border: "1px solid #34d399",
+                      padding: "6px 8px",
                       borderRadius: 4,
-                      fontWeight: 600,
+                      fontFamily: "var(--font-display)",
+                      fontWeight: 700,
                       cursor: "pointer",
                       fontSize: 10
                     }}
                   >
-                    ✓ Approve
+                    ✓ Authorize
                   </button>
                   <button
                     onClick={() => reply(false)}
                     style={{
                       flex: 1,
-                      background: "#f43f5e",
+                      background: "linear-gradient(135deg, #e11d48 0%, #9f1239 100%)",
                       color: "#fff",
-                      border: "none",
-                      padding: "5px 8px",
+                      border: "1px solid #f43f5e",
+                      padding: "6px 8px",
                       borderRadius: 4,
-                      fontWeight: 600,
+                      fontFamily: "var(--font-display)",
+                      fontWeight: 700,
                       cursor: "pointer",
                       fontSize: 10
                     }}
                   >
-                    ✕ Reject
+                    ✕ Halt
                   </button>
                 </div>
               </div>
             )}
 
-            {/* Info Footer Note */}
-            <div style={{ marginTop: "auto", paddingTop: 4, fontSize: 9, color: "var(--text-dim)", lineHeight: 1.4 }}>
-              • ReAct loop: observe → think → act<br/>
-              • Independent SQLite verification required
+            {/* Footer System Specs */}
+            <div style={{ marginTop: "auto", paddingTop: 4, fontSize: 9, color: "var(--text-muted)", fontFamily: "var(--font-mono)", lineHeight: 1.4 }}>
+              • ReAct Loop: Observe → Think → Act<br/>
+              • Out-of-band SQLite Ground Truth Verification
             </div>
           </div>
         </section>
 
 
         {/* ========================================================================= */}
-        {/* COLUMN 2: DEDICATED PROMPT QUERY RESULT COLUMN */}
+        {/* COLUMN 2: HOLOGRAPHIC TARGET ANALYSIS & GROUND TRUTH */}
         {/* ========================================================================= */}
-        <section className="glass-panel" style={{
-          height: "100%",
-          maxHeight: "100%",
-          display: "flex",
-          flexDirection: "column",
-          minHeight: 0,
-          overflow: "hidden"
-        }}>
-          {/* Col 2 Fixed Header */}
-          <div style={{
-            padding: "8px 12px",
-            borderBottom: "1px solid var(--border-color)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            background: "rgba(0, 0, 0, 0.25)",
-            flexShrink: 0
-          }}>
-            <div>
-              <h2 style={{ fontSize: 11, fontWeight: 700, margin: 0, color: "#f8fafc", display: "flex", alignItems: "center", gap: 5, textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                <span>🎯</span>
-                <span>Prompt Query Result</span>
-              </h2>
-            </div>
+        <section className="stark-panel">
+          <div className="panel-header">
+            <h2 className="panel-title">
+              <span>🎯</span>
+              <span>Target Analysis & Verification</span>
+            </h2>
 
             {currentRun && (
-              <div style={{
-                padding: "2px 7px",
-                borderRadius: 12,
-                fontSize: 9,
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.04em",
+              <div className="status-badge" style={{
                 background: status === "completed" ? "rgba(16, 185, 129, 0.2)" :
-                            status === "running" ? "rgba(99, 102, 241, 0.2)" :
-                            status === "waiting_human" ? "rgba(245, 158, 11, 0.2)" : "rgba(244, 63, 94, 0.2)",
+                            status === "running" ? "rgba(0, 229, 255, 0.2)" :
+                            status === "waiting_human" ? "rgba(245, 158, 11, 0.25)" : "rgba(225, 29, 72, 0.2)",
                 color: status === "completed" ? "#34d399" :
-                       status === "running" ? "#a5b4fc" :
-                       status === "waiting_human" ? "#fbbf24" : "#fb7185",
-                border: "1px solid currentColor"
+                       status === "running" ? "var(--stark-cyan)" :
+                       status === "waiting_human" ? "var(--stark-gold)" : "#f43f5e",
+                border: `1px solid ${status === "completed" ? "#34d399" : status === "running" ? "#00e5ff" : "#f43f5e"}`
               }}>
-                {status}
+                [STATUS: {status.toUpperCase()}]
               </div>
             )}
           </div>
 
-          {/* Col 2 Scrollable Body */}
           <div style={{
             flex: 1,
             minHeight: 0,
@@ -685,85 +715,91 @@ export default function App() {
           }}>
             {currentRun ? (
               <>
-                {/* Active Prompt Quoted Box */}
+                {/* Active Directive Briefing */}
                 <div style={{
-                  background: "rgba(0, 0, 0, 0.35)",
-                  border: "1px solid rgba(255, 255, 255, 0.06)",
-                  borderRadius: 6,
+                  background: "rgba(7, 10, 18, 0.65)",
+                  border: "1px solid var(--border-medium)",
+                  borderRadius: 5,
                   padding: "8px 10px"
                 }}>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 3 }}>
-                    <span style={{ fontSize: 9, color: "#818cf8", fontWeight: 700, textTransform: "uppercase" }}>
-                      RUN #{currentRun.id}
+                    <span style={{ fontSize: 9, color: "var(--stark-cyan)", fontFamily: "var(--font-display)", fontWeight: 700 }}>
+                      TASK RUN #{currentRun.id}
                     </span>
                     {currentRun.created_at && (
-                      <span style={{ fontSize: 9, color: "#64748b" }}>{currentRun.created_at}</span>
+                      <span style={{ fontSize: 9, color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
+                        {currentRun.created_at}
+                      </span>
                     )}
                   </div>
-                  <div style={{ fontSize: 11, color: "#e2e8f0", fontStyle: "italic", lineHeight: 1.4 }}>
+                  <div style={{ fontSize: 11, color: "var(--text-main)", fontStyle: "italic", lineHeight: 1.4 }}>
                     "{currentRun.task}"
                   </div>
                 </div>
 
-                {/* Ground Truth Verification Banner */}
+                {/* Ground Truth Verification Status */}
                 {result?.verified ? (
                   <div style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: 6,
-                    background: "rgba(16, 185, 129, 0.12)",
-                    border: "1px solid rgba(16, 185, 129, 0.4)",
-                    borderRadius: 6,
-                    padding: "6px 10px",
+                    gap: 8,
+                    background: "linear-gradient(90deg, rgba(16, 185, 129, 0.15) 0%, rgba(0, 229, 255, 0.08) 100%)",
+                    border: "1px solid #10b981",
+                    borderRadius: 5,
+                    padding: "8px 12px",
                     color: "#34d399",
-                    fontSize: 10,
-                    fontWeight: 600
+                    fontSize: 11,
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 700,
+                    boxShadow: "0 0 15px rgba(16, 185, 129, 0.2)"
                   }}>
-                    <span style={{ fontSize: 13 }}>✓</span>
-                    <span>100% Ground Truth Verified Independently via SQLite</span>
+                    <span style={{ fontSize: 15 }}>✓</span>
+                    <span>100% Ground Truth Verified // SQLite Row Confirmed</span>
                   </div>
-                ) : status === "running" ? (
+                ) : isRunning ? (
                   <div style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: 6,
-                    background: "rgba(99, 102, 241, 0.1)",
-                    border: "1px solid rgba(99, 102, 241, 0.3)",
-                    borderRadius: 6,
-                    padding: "6px 10px",
-                    color: "#a5b4fc",
-                    fontSize: 10
+                    gap: 8,
+                    background: "rgba(0, 229, 255, 0.08)",
+                    border: "1px solid var(--stark-cyan-border)",
+                    borderRadius: 5,
+                    padding: "8px 12px",
+                    color: "var(--stark-cyan)",
+                    fontSize: 10,
+                    fontFamily: "var(--font-mono)"
                   }}>
-                    <span className="pulsing-indicator">●</span>
-                    <span>Actively browsing portal, extracting documents & verifying SQLite...</span>
+                    <span className="radar-dot" style={{ width: 7, height: 7, borderRadius: "50%", background: "#00e5ff", display: "inline-block" }}></span>
+                    <span>Playwright Browser Active // Querying SQLite Ground Truth...</span>
                   </div>
                 ) : (
                   <div style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: 6,
-                    background: "rgba(244, 63, 94, 0.1)",
-                    border: "1px solid rgba(244, 63, 94, 0.3)",
-                    borderRadius: 6,
-                    padding: "6px 10px",
-                    color: "#fb7185",
-                    fontSize: 10
+                    gap: 8,
+                    background: "rgba(225, 29, 72, 0.1)",
+                    border: "1px solid rgba(225, 29, 72, 0.35)",
+                    borderRadius: 5,
+                    padding: "8px 12px",
+                    color: "#f43f5e",
+                    fontSize: 10,
+                    fontFamily: "var(--font-mono)"
                   }}>
-                    <span>⚠</span>
-                    <span>{status === "failed" ? "Verification failed or task halted." : "Verification pending."}</span>
+                    <span>⚠️</span>
+                    <span>{status === "failed" ? "Mission Halted // Verification Incomplete" : "Verification Pending"}</span>
                   </div>
                 )}
 
-                {/* Findings & Summary Box */}
+                {/* Reconnaissance Intelligence Summary */}
                 <div style={{
-                  background: "rgba(255, 255, 255, 0.02)",
-                  border: "1px solid rgba(255, 255, 255, 0.07)",
-                  borderRadius: 6,
+                  background: "rgba(7, 10, 18, 0.75)",
+                  border: "1px solid var(--border-medium)",
+                  borderRadius: 5,
                   padding: 10
                 }}>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}>
-                    <span style={{ fontSize: 9, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase" }}>
-                      Query Findings & Summary
+                    <span style={{ fontSize: 9, fontWeight: 700, color: "var(--stark-gold)", fontFamily: "var(--font-display)", textTransform: "uppercase" }}>
+                      Reconnaissance Summary
                     </span>
                     {result?.summary && (
                       <button
@@ -771,10 +807,11 @@ export default function App() {
                         style={{
                           background: "transparent",
                           border: "none",
-                          color: copied ? "#34d399" : "#818cf8",
+                          color: copied ? "#34d399" : "var(--stark-cyan)",
                           fontSize: 9,
+                          fontFamily: "var(--font-mono)",
                           cursor: "pointer",
-                          fontWeight: 600
+                          fontWeight: 700
                         }}
                       >
                         {copied ? "✓ Copied" : "📋 Copy"}
@@ -786,13 +823,14 @@ export default function App() {
                     fontSize: 11,
                     color: "#f1f5f9",
                     lineHeight: 1.5,
-                    whiteSpace: "pre-wrap"
+                    whiteSpace: "pre-wrap",
+                    fontFamily: "var(--font-mono)"
                   }}>
-                    {result?.summary || (status === "running" ? "Reasoning in progress. Live telemetry streaming on the right..." : "No result summary available.")}
+                    {result?.summary || (isRunning ? "J.A.R.V.I.S. neural processing active. Live ReAct telemetry streaming on the right..." : "No result summary available.")}
                   </div>
                 </div>
 
-                {/* Extracted 4-Metric Grid */}
+                {/* 4-Metric Armor Telemetry Grid */}
                 {matchedRecord && (
                   <div style={{
                     display: "grid",
@@ -800,91 +838,71 @@ export default function App() {
                     gap: 6
                   }}>
                     <div style={{
-                      background: "rgba(0, 0, 0, 0.3)",
+                      background: "rgba(7, 10, 18, 0.6)",
                       padding: "6px 8px",
-                      borderRadius: 5,
-                      border: "1px solid rgba(255, 255, 255, 0.06)"
+                      borderRadius: 4,
+                      border: "1px solid var(--border-subtle)"
                     }}>
-                      <div style={{ fontSize: 8, color: "#818cf8", fontWeight: 700, textTransform: "uppercase" }}>
+                      <div style={{ fontSize: 8, color: "var(--stark-cyan)", fontFamily: "var(--font-display)", fontWeight: 700 }}>
                         🏢 Target Company
                       </div>
-                      <div style={{ fontSize: 11, color: "#f8fafc", fontWeight: 600, marginTop: 1 }}>
+                      <div style={{ fontSize: 11, color: "#fff", fontWeight: 700, marginTop: 2 }}>
                         {matchedRecord.company}
                       </div>
                     </div>
 
                     <div style={{
-                      background: "rgba(0, 0, 0, 0.3)",
+                      background: "rgba(7, 10, 18, 0.6)",
                       padding: "6px 8px",
-                      borderRadius: 5,
-                      border: "1px solid rgba(255, 255, 255, 0.06)"
+                      borderRadius: 4,
+                      border: "1px solid var(--border-subtle)"
                     }}>
-                      <div style={{ fontSize: 8, color: "#818cf8", fontWeight: 700, textTransform: "uppercase" }}>
-                        📄 Invoice Number
+                      <div style={{ fontSize: 8, color: "var(--stark-cyan)", fontFamily: "var(--font-display)", fontWeight: 700 }}>
+                        📄 Invoice Identifier
                       </div>
-                      <div style={{ fontSize: 11, color: "#f8fafc", fontWeight: 600, marginTop: 1, fontFamily: "'JetBrains Mono', monospace" }}>
+                      <div style={{ fontSize: 11, color: "var(--stark-gold)", fontWeight: 700, marginTop: 2, fontFamily: "var(--font-mono)" }}>
                         {matchedRecord.invoice_no}
                       </div>
                     </div>
 
                     <div style={{
-                      background: "rgba(0, 0, 0, 0.3)",
+                      background: "rgba(7, 10, 18, 0.6)",
                       padding: "6px 8px",
-                      borderRadius: 5,
-                      border: "1px solid rgba(255, 255, 255, 0.06)"
+                      borderRadius: 4,
+                      border: "1px solid var(--stark-gold-border)"
                     }}>
-                      <div style={{ fontSize: 8, color: "#818cf8", fontWeight: 700, textTransform: "uppercase" }}>
-                        💰 Amount (INR)
+                      <div style={{ fontSize: 8, color: "var(--stark-gold)", fontFamily: "var(--font-display)", fontWeight: 700 }}>
+                        💰 Verified Amount (INR)
                       </div>
-                      <div style={{ fontSize: 11, color: "#34d399", fontWeight: 700, marginTop: 1, fontFamily: "'JetBrains Mono', monospace" }}>
+                      <div style={{ fontSize: 12, color: "#34d399", fontWeight: 800, marginTop: 2, fontFamily: "var(--font-mono)" }}>
                         ₹{Number(matchedRecord.amount).toLocaleString()}
                       </div>
                     </div>
 
                     <div style={{
-                      background: "rgba(0, 0, 0, 0.3)",
+                      background: "rgba(7, 10, 18, 0.6)",
                       padding: "6px 8px",
-                      borderRadius: 5,
-                      border: "1px solid rgba(255, 255, 255, 0.06)"
+                      borderRadius: 4,
+                      border: "1px solid var(--border-subtle)"
                     }}>
-                      <div style={{ fontSize: 8, color: "#818cf8", fontWeight: 700, textTransform: "uppercase" }}>
-                        📅 Due Date
+                      <div style={{ fontSize: 8, color: "var(--stark-cyan)", fontFamily: "var(--font-display)", fontWeight: 700 }}>
+                        📅 Maturity Due Date
                       </div>
-                      <div style={{ fontSize: 11, color: "#e2e8f0", fontWeight: 600, marginTop: 1 }}>
+                      <div style={{ fontSize: 11, color: "#e2e8f0", fontWeight: 700, marginTop: 2, fontFamily: "var(--font-mono)" }}>
                         {matchedRecord.due_date}
                       </div>
                     </div>
                   </div>
                 )}
 
-                {/* Matched DB Record Confirmation */}
-                {matchedRecord && (
-                  <div style={{
-                    background: "rgba(16, 185, 129, 0.07)",
-                    border: "1px solid rgba(16, 185, 129, 0.25)",
-                    borderRadius: 6,
-                    padding: "6px 8px"
-                  }}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 2 }}>
-                      <span style={{ fontSize: 9, fontWeight: 700, color: "#34d399", display: "flex", alignItems: "center", gap: 4 }}>
-                        <span>✓</span> RECORD CONFIRMED IN SQLITE RECORDS TABLE
-                      </span>
-                      <span style={{ fontSize: 8, color: "var(--text-dim)" }}>Updated: {matchedRecord.updated_at}</span>
-                    </div>
-                    <div style={{ fontSize: 10, color: "#cbd5e1" }}>
-                      Invoice <strong>{matchedRecord.invoice_no}</strong> is verified in persistent storage.
-                    </div>
-                  </div>
-                )}
-
-                {/* Evidence Screenshots Carousel */}
+                {/* Evidence Visual Recon Gallery */}
                 {result?.evidence && result.evidence.length > 0 && (
                   <div style={{ marginTop: "auto", paddingTop: 4 }}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}>
-                      <span style={{ fontSize: 9, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase" }}>
-                        Evidence Screenshots ({result.evidence.length})
+                      <span style={{ fontSize: 9, fontWeight: 700, color: "var(--stark-cyan)", fontFamily: "var(--font-display)", textTransform: "uppercase" }}>
+                        Visual Recon Evidence ({result.evidence.length})
                       </span>
-                      <span style={{ fontSize: 8, color: "var(--text-dim)" }}>Click to zoom</span>
+                      <span style={{ fontSize: 8, color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>Click to Expand</span>
                     </div>
 
                     <div style={{ display: "flex", gap: 6, overflowX: "auto", paddingBottom: 2 }}>
@@ -900,26 +918,27 @@ export default function App() {
                         >
                           <img
                             src={u}
-                            alt={`Evidence ${i + 1}`}
+                            alt={`HUD Evidence ${i + 1}`}
                             style={{
-                              width: 115,
-                              height: 65,
+                              width: 120,
+                              height: 68,
                               objectFit: "cover",
                               borderRadius: 4,
-                              border: "1px solid var(--border-color)"
+                              border: "1px solid var(--stark-cyan-border)"
                             }}
                           />
                           <span style={{
                             position: "absolute",
                             bottom: 2,
                             right: 2,
-                            background: "rgba(0, 0, 0, 0.75)",
-                            color: "#fff",
-                            fontSize: 8,
-                            padding: "1px 3px",
+                            background: "rgba(0, 0, 0, 0.8)",
+                            color: "var(--stark-cyan)",
+                            fontFamily: "var(--font-mono)",
+                            fontSize: 7,
+                            padding: "1px 4px",
                             borderRadius: 2
                           }}>
-                            Zoom
+                            EXPAND
                           </span>
                         </div>
                       ))}
@@ -935,29 +954,24 @@ export default function App() {
                 alignItems: "center",
                 justifyContent: "center",
                 textAlign: "center",
-                color: "#6b7280",
+                color: "var(--text-muted)",
                 padding: "20px 10px"
               }}>
-                <div style={{ fontSize: 32, marginBottom: 8 }}>🎯</div>
-                <h3 style={{ margin: "0 0 4px 0", fontSize: 13, color: "#cbd5e1" }}>
-                  Query Result Standby
+                <ArcReactor isRunning={false} />
+                <h3 style={{ margin: "10px 0 4px 0", fontSize: 13, color: "var(--stark-cyan)", fontFamily: "var(--font-display)" }}>
+                  Target Reconnaissance Standby
                 </h3>
-                <p style={{ margin: 0, fontSize: 10, maxWidth: 240, lineHeight: 1.45 }}>
-                  Select a prompt on the left and click <strong>Execute Task Prompt</strong>.
+                <p style={{ margin: 0, fontSize: 10, maxWidth: 250, lineHeight: 1.45, fontFamily: "var(--font-mono)" }}>
+                  Select an objective in the Mission Input Console and click Initiate Protocol.
                 </p>
                 {runs.length > 0 && (
                   <button
                     onClick={() => loadHistoricalRun(runs[0].id)}
+                    className="btn-stark-cyan"
                     style={{
-                      marginTop: 10,
-                      background: "rgba(99, 102, 241, 0.15)",
-                      border: "1px solid rgba(99, 102, 241, 0.3)",
-                      color: "#a5b4fc",
-                      borderRadius: 5,
+                      marginTop: 12,
                       padding: "4px 10px",
-                      fontSize: 10,
-                      cursor: "pointer",
-                      fontWeight: 600
+                      fontSize: 10
                     }}
                   >
                     Load Latest Run (#{runs[0].id})
@@ -970,38 +984,32 @@ export default function App() {
 
 
         {/* ========================================================================= */}
-        {/* COLUMN 3: SYSTEM RECORDED DATA & STORAGE (INVOICES, RUNS, TELEMETRY) */}
+        {/* COLUMN 3: STARK RECORDED ARCHIVE & NEURAL TELEMETRY */}
         {/* ========================================================================= */}
-        <section className="glass-panel" style={{
-          height: "100%",
-          maxHeight: "100%",
-          display: "flex",
-          flexDirection: "column",
-          minHeight: 0,
-          overflow: "hidden"
-        }}>
-          {/* Col 3 Fixed Tab Header */}
+        <section className="stark-panel">
+          {/* Tab Navigation */}
           <div style={{
             padding: "6px 10px",
-            borderBottom: "1px solid var(--border-color)",
+            borderBottom: "1px solid var(--border-medium)",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            background: "rgba(0, 0, 0, 0.25)",
+            background: "linear-gradient(90deg, rgba(12, 18, 30, 0.95) 0%, rgba(245, 158, 11, 0.06) 100%)",
             flexShrink: 0
           }}>
-            <div style={{ display: "flex", gap: 3 }}>
+            <div style={{ display: "flex", gap: 4 }}>
               {/* Tab 1: Database Invoices */}
               <button
                 onClick={() => setActiveTab("records")}
                 style={{
-                  background: activeTab === "records" ? "rgba(99, 102, 241, 0.25)" : "transparent",
-                  color: activeTab === "records" ? "#c7d2fe" : "#94a3b8",
-                  border: activeTab === "records" ? "1px solid rgba(99, 102, 241, 0.45)" : "1px solid transparent",
+                  background: activeTab === "records" ? "rgba(0, 229, 255, 0.15)" : "transparent",
+                  color: activeTab === "records" ? "var(--stark-cyan)" : "var(--text-secondary)",
+                  border: activeTab === "records" ? "1px solid var(--stark-cyan)" : "1px solid transparent",
                   padding: "4px 8px",
-                  borderRadius: 5,
+                  borderRadius: 4,
                   fontSize: 10,
-                  fontWeight: 600,
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 700,
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
@@ -1010,10 +1018,12 @@ export default function App() {
               >
                 <span>🏢 Invoices</span>
                 <span style={{
-                  background: activeTab === "records" ? "rgba(99, 102, 241, 0.45)" : "rgba(255, 255, 255, 0.08)",
+                  background: activeTab === "records" ? "var(--stark-cyan)" : "rgba(255, 255, 255, 0.08)",
+                  color: activeTab === "records" ? "#000" : "inherit",
                   padding: "1px 4px",
-                  borderRadius: 6,
-                  fontSize: 9
+                  borderRadius: 3,
+                  fontSize: 9,
+                  fontWeight: 800
                 }}>
                   {records.length}
                 </span>
@@ -1023,13 +1033,14 @@ export default function App() {
               <button
                 onClick={() => setActiveTab("runs")}
                 style={{
-                  background: activeTab === "runs" ? "rgba(99, 102, 241, 0.25)" : "transparent",
-                  color: activeTab === "runs" ? "#c7d2fe" : "#94a3b8",
-                  border: activeTab === "runs" ? "1px solid rgba(99, 102, 241, 0.45)" : "1px solid transparent",
+                  background: activeTab === "runs" ? "rgba(245, 158, 11, 0.15)" : "transparent",
+                  color: activeTab === "runs" ? "var(--stark-gold)" : "var(--text-secondary)",
+                  border: activeTab === "runs" ? "1px solid var(--stark-gold)" : "1px solid transparent",
                   padding: "4px 8px",
-                  borderRadius: 5,
+                  borderRadius: 4,
                   fontSize: 10,
-                  fontWeight: 600,
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 700,
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
@@ -1038,10 +1049,12 @@ export default function App() {
               >
                 <span>📜 Runs</span>
                 <span style={{
-                  background: activeTab === "runs" ? "rgba(99, 102, 241, 0.45)" : "rgba(255, 255, 255, 0.08)",
+                  background: activeTab === "runs" ? "var(--stark-gold)" : "rgba(255, 255, 255, 0.08)",
+                  color: activeTab === "runs" ? "#000" : "inherit",
                   padding: "1px 4px",
-                  borderRadius: 6,
-                  fontSize: 9
+                  borderRadius: 3,
+                  fontSize: 9,
+                  fontWeight: 800
                 }}>
                   {runs.length}
                 </span>
@@ -1051,13 +1064,14 @@ export default function App() {
               <button
                 onClick={() => setActiveTab("telemetry")}
                 style={{
-                  background: activeTab === "telemetry" ? "rgba(99, 102, 241, 0.25)" : "transparent",
-                  color: activeTab === "telemetry" ? "#c7d2fe" : "#94a3b8",
-                  border: activeTab === "telemetry" ? "1px solid rgba(99, 102, 241, 0.45)" : "1px solid transparent",
+                  background: activeTab === "telemetry" ? "rgba(225, 29, 72, 0.15)" : "transparent",
+                  color: activeTab === "telemetry" ? "#f43f5e" : "var(--text-secondary)",
+                  border: activeTab === "telemetry" ? "1px solid #e11d48" : "1px solid transparent",
                   padding: "4px 8px",
-                  borderRadius: 5,
+                  borderRadius: 4,
                   fontSize: 10,
-                  fontWeight: 600,
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 700,
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
@@ -1066,10 +1080,12 @@ export default function App() {
               >
                 <span>📡 Telemetry</span>
                 <span style={{
-                  background: activeTab === "telemetry" ? "rgba(99, 102, 241, 0.45)" : "rgba(255, 255, 255, 0.08)",
+                  background: activeTab === "telemetry" ? "#e11d48" : "rgba(255, 255, 255, 0.08)",
+                  color: activeTab === "telemetry" ? "#fff" : "inherit",
                   padding: "1px 4px",
-                  borderRadius: 6,
-                  fontSize: 9
+                  borderRadius: 3,
+                  fontSize: 9,
+                  fontWeight: 800
                 }}>
                   {events.length}
                 </span>
@@ -1081,18 +1097,17 @@ export default function App() {
               style={{
                 background: "transparent",
                 border: "none",
-                color: "#94a3b8",
-                fontSize: 10,
-                cursor: "pointer",
-                padding: "2px 5px"
+                color: "var(--stark-cyan)",
+                fontSize: 11,
+                cursor: "pointer"
               }}
-              title="Refresh system records"
+              title="Refresh archive data"
             >
               🔄
             </button>
           </div>
 
-          {/* Col 3 Scrollable Body */}
+          {/* Scrollable Body */}
           <div style={{
             flex: 1,
             minHeight: 0,
@@ -1108,22 +1123,23 @@ export default function App() {
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 6 }}>
                   <input
                     type="text"
-                    placeholder="Filter invoices..."
+                    placeholder="Search invoices..."
                     value={recordsFilter}
                     onChange={(e) => setRecordsFilter(e.target.value)}
                     style={{
                       flex: 1,
-                      background: "rgba(0, 0, 0, 0.35)",
-                      border: "1px solid var(--border-color)",
+                      background: "rgba(7, 10, 18, 0.7)",
+                      border: "1px solid var(--border-medium)",
                       borderRadius: 4,
                       padding: "4px 8px",
-                      color: "#f8fafc",
+                      color: "var(--stark-cyan)",
                       fontSize: 10,
+                      fontFamily: "var(--font-mono)",
                       outline: "none"
                     }}
                   />
-                  <div style={{ fontSize: 10, color: "#34d399", fontWeight: 700, whiteSpace: "nowrap", fontFamily: "'JetBrains Mono', monospace" }}>
-                    ₹{totalAmount.toLocaleString()}
+                  <div style={{ fontSize: 11, color: "var(--stark-gold)", fontWeight: 800, whiteSpace: "nowrap", fontFamily: "var(--font-mono)" }}>
+                    Total: ₹{totalAmount.toLocaleString()}
                   </div>
                 </div>
 
@@ -1131,27 +1147,28 @@ export default function App() {
                   <div style={{
                     padding: "30px 10px",
                     textAlign: "center",
-                    color: "#6b7280",
+                    color: "var(--text-muted)",
                     fontSize: 10,
-                    border: "1px dashed rgba(255, 255, 255, 0.1)",
-                    borderRadius: 6
+                    fontFamily: "var(--font-mono)",
+                    border: "1px dashed var(--border-medium)",
+                    borderRadius: 4
                   }}>
-                    No invoices matched.
+                    No invoices match filter criteria.
                   </div>
                 ) : (
                   <div style={{
-                    border: "1px solid var(--border-color)",
-                    borderRadius: 6,
+                    border: "1px solid var(--border-medium)",
+                    borderRadius: 5,
                     overflow: "hidden",
-                    background: "rgba(0, 0, 0, 0.25)"
+                    background: "rgba(7, 10, 18, 0.5)"
                   }}>
                     <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 10 }}>
                       <thead>
-                        <tr style={{ background: "rgba(255, 255, 255, 0.03)", borderBottom: "1px solid var(--border-color)" }}>
-                          <th style={{ textAlign: "left", padding: "6px 8px", color: "#94a3b8", fontWeight: 600 }}>Invoice #</th>
-                          <th style={{ textAlign: "left", padding: "6px 8px", color: "#94a3b8", fontWeight: 600 }}>Company</th>
-                          <th style={{ textAlign: "right", padding: "6px 8px", color: "#94a3b8", fontWeight: 600 }}>Amount</th>
-                          <th style={{ textAlign: "left", padding: "6px 8px", color: "#94a3b8", fontWeight: 600 }}>Due Date</th>
+                        <tr style={{ background: "rgba(0, 229, 255, 0.06)", borderBottom: "1px solid var(--border-medium)" }}>
+                          <th style={{ textAlign: "left", padding: "6px 8px", color: "var(--stark-cyan)", fontFamily: "var(--font-display)", fontWeight: 700 }}>Invoice #</th>
+                          <th style={{ textAlign: "left", padding: "6px 8px", color: "var(--stark-cyan)", fontFamily: "var(--font-display)", fontWeight: 700 }}>Company</th>
+                          <th style={{ textAlign: "right", padding: "6px 8px", color: "var(--stark-gold)", fontFamily: "var(--font-display)", fontWeight: 700 }}>Amount</th>
+                          <th style={{ textAlign: "left", padding: "6px 8px", color: "var(--stark-cyan)", fontFamily: "var(--font-display)", fontWeight: 700 }}>Due Date</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1160,24 +1177,24 @@ export default function App() {
                           return (
                             <tr
                               key={i}
-                              className={isHighlighted ? "highlighted-record-row" : ""}
+                              className={isHighlighted ? "highlighted-row" : ""}
                               style={{
                                 borderBottom: "1px solid rgba(255, 255, 255, 0.04)"
                               }}
                             >
-                              <td style={{ padding: "6px 8px", color: "#818cf8", fontWeight: 600, fontFamily: "'JetBrains Mono', monospace" }}>
+                              <td style={{ padding: "6px 8px", color: "var(--stark-cyan)", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
                                 {r.invoice_no}
                                 {isHighlighted && (
-                                  <span style={{ marginLeft: 4, fontSize: 7, background: "#10b981", color: "#000", padding: "1px 2px", borderRadius: 2, fontWeight: 800 }}>
+                                  <span style={{ marginLeft: 4, fontSize: 7, background: "#00e5ff", color: "#000", padding: "1px 3px", borderRadius: 2, fontWeight: 900 }}>
                                     MATCH
                                   </span>
                                 )}
                               </td>
                               <td style={{ padding: "6px 8px", color: "#f1f5f9" }}>{r.company}</td>
-                              <td style={{ padding: "6px 8px", textAlign: "right", fontFamily: "'JetBrains Mono', monospace", color: "#34d399", fontWeight: 700 }}>
+                              <td style={{ padding: "6px 8px", textAlign: "right", fontFamily: "var(--font-mono)", color: "var(--stark-gold)", fontWeight: 700 }}>
                                 ₹{Number(r.amount).toLocaleString()}
                               </td>
-                              <td style={{ padding: "6px 8px", color: "#cbd5e1" }}>{r.due_date}</td>
+                              <td style={{ padding: "6px 8px", color: "#cbd5e1", fontFamily: "var(--font-mono)" }}>{r.due_date}</td>
                             </tr>
                           );
                         })}
@@ -1188,26 +1205,28 @@ export default function App() {
               </>
             )}
 
-            {/* TAB 2: ALL RECORDED TASK RUNS HISTORY */}
+            {/* TAB 2: TASK RUNS HISTORY */}
             {activeTab === "runs" && (
               <>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <span style={{ fontSize: 10, color: "#94a3b8", fontWeight: 600 }}>
-                    Recorded Runs ({filteredRuns.length})
+                  <span style={{ fontSize: 9, color: "var(--stark-gold)", fontFamily: "var(--font-display)", fontWeight: 700 }}>
+                    Mission History ({filteredRuns.length})
                   </span>
-                  <div style={{ display: "flex", gap: 2 }}>
+                  <div style={{ display: "flex", gap: 3 }}>
                     {["all", "completed", "failed"].map(s => (
                       <button
                         key={s}
                         onClick={() => setRunsFilter(s)}
                         style={{
-                          background: runsFilter === s ? "rgba(99, 102, 241, 0.3)" : "rgba(255, 255, 255, 0.04)",
-                          border: runsFilter === s ? "1px solid rgba(99, 102, 241, 0.5)" : "1px solid transparent",
-                          color: runsFilter === s ? "#c7d2fe" : "#94a3b8",
+                          background: runsFilter === s ? "var(--stark-gold)" : "rgba(255, 255, 255, 0.05)",
+                          border: "none",
+                          color: runsFilter === s ? "#000" : "var(--text-secondary)",
                           padding: "1px 5px",
                           borderRadius: 3,
                           fontSize: 9,
-                          textTransform: "capitalize",
+                          fontFamily: "var(--font-mono)",
+                          textTransform: "uppercase",
+                          fontWeight: 700,
                           cursor: "pointer"
                         }}
                       >
@@ -1224,9 +1243,9 @@ export default function App() {
                       <div
                         key={r.id}
                         style={{
-                          background: isCurrent ? "rgba(99, 102, 241, 0.14)" : "rgba(255, 255, 255, 0.02)",
-                          border: isCurrent ? "1px solid rgba(99, 102, 241, 0.4)" : "1px solid rgba(255, 255, 255, 0.05)",
-                          borderRadius: 5,
+                          background: isCurrent ? "rgba(0, 229, 255, 0.1)" : "rgba(7, 10, 18, 0.5)",
+                          border: isCurrent ? "1px solid var(--stark-cyan)" : "1px solid rgba(255, 255, 255, 0.06)",
+                          borderRadius: 4,
                           padding: 6,
                           display: "flex",
                           flexDirection: "column",
@@ -1236,28 +1255,29 @@ export default function App() {
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                           <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
                             <span style={{
-                              fontFamily: "'JetBrains Mono', monospace",
+                              fontFamily: "var(--font-mono)",
                               fontSize: 9,
-                              color: "#818cf8",
+                              color: "var(--stark-cyan)",
                               fontWeight: 700
                             }}>
-                              #{r.id}
+                              RUN #{r.id}
                             </span>
                             <span style={{
                               fontSize: 8,
                               padding: "1px 4px",
-                              borderRadius: 6,
+                              borderRadius: 3,
                               fontWeight: 700,
                               textTransform: "uppercase",
+                              fontFamily: "var(--font-mono)",
                               background: r.status === "completed" ? "rgba(16, 185, 129, 0.2)" :
-                                          r.status === "running" ? "rgba(99, 102, 241, 0.2)" : "rgba(244, 63, 94, 0.2)",
+                                          r.status === "running" ? "rgba(0, 229, 255, 0.2)" : "rgba(225, 29, 72, 0.2)",
                               color: r.status === "completed" ? "#34d399" :
-                                     r.status === "running" ? "#a5b4fc" : "#fb7185"
+                                     r.status === "running" ? "var(--stark-cyan)" : "#f43f5e"
                             }}>
                               {r.status}
                             </span>
                           </div>
-                          <span style={{ fontSize: 8, color: "#64748b" }}>{r.created_at}</span>
+                          <span style={{ fontSize: 8, color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>{r.created_at}</span>
                         </div>
 
                         <div style={{ fontSize: 10, color: "#cbd5e1", lineHeight: 1.35, wordBreak: "break-word" }}>
@@ -1266,29 +1286,24 @@ export default function App() {
 
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 2 }}>
                           {r.result?.verified ? (
-                            <span style={{ fontSize: 8, color: "#34d399", fontWeight: 600 }}>
-                              ✓ Verified
+                            <span style={{ fontSize: 8, color: "#34d399", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
+                              ✓ Ground Truth Verified
                             </span>
                           ) : (
-                            <span style={{ fontSize: 8, color: "#94a3b8" }}>
+                            <span style={{ fontSize: 8, color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
                               {r.result?.summary ? r.result.summary.slice(0, 35) + "..." : ""}
                             </span>
                           )}
 
                           <button
                             onClick={() => loadHistoricalRun(r.id)}
+                            className="btn-stark-cyan"
                             style={{
-                              background: "rgba(99, 102, 241, 0.2)",
-                              border: "1px solid rgba(99, 102, 241, 0.35)",
-                              color: "#c7d2fe",
-                              borderRadius: 3,
                               padding: "1px 6px",
-                              fontSize: 9,
-                              cursor: "pointer",
-                              fontWeight: 600
+                              fontSize: 9
                             }}
                           >
-                            {isCurrent ? "Active In View" : "Inspect →"}
+                            {isCurrent ? "Active" : "Inspect →"}
                           </button>
                         </div>
                       </div>
@@ -1298,33 +1313,33 @@ export default function App() {
               </>
             )}
 
-            {/* TAB 3: AGENT EXECUTION TELEMETRY STREAM */}
+            {/* TAB 3: TELEMETRY STREAM */}
             {activeTab === "telemetry" && (
               <div style={{
                 display: "flex",
                 flexDirection: "column",
                 gap: 5,
-                fontFamily: "'JetBrains Mono', monospace"
+                fontFamily: "var(--font-mono)"
               }}>
                 {events.length === 0 ? (
                   <div style={{
                     padding: "30px 10px",
                     textAlign: "center",
-                    color: "#6b7280",
+                    color: "var(--text-muted)",
                     fontSize: 10
                   }}>
-                    Execute a prompt on the left to stream live ReAct events.
+                    Awaiting deployment. Execute a task to stream real-time ReAct telemetry.
                   </div>
                 ) : (
                   events.map((e) => {
-                    const conf = EVENT_CONFIG[e.kind] || { label: e.kind.toUpperCase(), bg: "rgba(255,255,255,0.05)", text: "#94a3b8", icon: "•" };
+                    const conf = EVENT_CONFIG[e.kind] || { label: e.kind.toUpperCase(), bg: "rgba(0, 229, 255, 0.05)", text: "var(--stark-cyan)", icon: "•", border: "var(--border-medium)" };
                     return (
                       <div
                         key={e.id}
                         style={{
                           background: conf.bg,
-                          border: `1px solid ${conf.text}33`,
-                          borderRadius: 5,
+                          border: `1px solid ${conf.border}`,
+                          borderRadius: 4,
                           padding: "5px 8px",
                           fontSize: 10,
                           lineHeight: 1.4
@@ -1333,9 +1348,9 @@ export default function App() {
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 2 }}>
                           <div style={{ display: "flex", alignItems: "center", gap: 4, color: conf.text, fontWeight: 700 }}>
                             <span>{conf.icon}</span>
-                            <span>{conf.label}</span>
+                            <span style={{ fontFamily: "var(--font-display)", fontSize: 9 }}>{conf.label}</span>
                           </div>
-                          <span style={{ color: "#64748b", fontSize: 8 }}>{e.ts}</span>
+                          <span style={{ color: "var(--text-muted)", fontSize: 8 }}>{e.ts}</span>
                         </div>
 
                         <div style={{ color: "#e2e8f0", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
@@ -1346,13 +1361,13 @@ export default function App() {
                           <div style={{ marginTop: 4 }}>
                             <img
                               src={e.data.url}
-                              alt="Screenshot"
+                              alt="HUD Screenshot"
                               onClick={() => setPreviewImage(e.data.url)}
                               style={{
                                 maxWidth: "100%",
                                 maxHeight: 110,
                                 borderRadius: 4,
-                                border: "1px solid rgba(255,255,255,0.12)",
+                                border: "1px solid var(--stark-cyan-border)",
                                 cursor: "pointer"
                               }}
                             />
@@ -1377,8 +1392,8 @@ export default function App() {
           style={{
             position: "fixed",
             inset: 0,
-            background: "rgba(0,0,0,0.88)",
-            backdropFilter: "blur(8px)",
+            background: "rgba(7, 10, 18, 0.94)",
+            backdropFilter: "blur(12px)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -1386,14 +1401,14 @@ export default function App() {
             padding: 24
           }}
         >
-          <div style={{ position: "relative", maxWidth: "90%", maxHeight: "90%" }}>
+          <div style={{ position: "relative", maxWidth: "90%", maxHeight: "90%", border: "1px solid var(--stark-cyan)", borderRadius: 6, boxShadow: "0 0 40px rgba(0, 229, 255, 0.3)" }}>
             <img
               src={previewImage}
               alt="Screenshot Large"
-              style={{ width: "100%", height: "auto", borderRadius: 8, border: "1px solid rgba(255,255,255,0.25)", boxShadow: "0 0 40px rgba(0,0,0,0.8)" }}
+              style={{ width: "100%", height: "auto", display: "block", borderRadius: 5 }}
             />
-            <div style={{ textAlign: "center", marginTop: 8, fontSize: 11, color: "#94a3b8" }}>
-              Click anywhere to close
+            <div style={{ textAlign: "center", marginTop: 8, fontSize: 11, color: "var(--stark-cyan)", fontFamily: "var(--font-display)" }}>
+              Click anywhere to dismiss
             </div>
           </div>
         </div>

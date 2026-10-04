@@ -1,111 +1,280 @@
 :root {
-  --bg-primary: #080c14;
-  --bg-secondary: #0f172a;
-  --bg-card: rgba(15, 23, 42, 0.75);
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-hover: rgba(255, 255, 255, 0.16);
-  --border-active: rgba(99, 102, 241, 0.45);
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --text-dim: #64748b;
-  --accent-blue: #6366f1;
-  --accent-cyan: #06b6d4;
-  --accent-emerald: #10b981;
-  --accent-amber: #f59e0b;
-  --accent-rose: #f43f5e;
+  /* Stark Industries Enterprise Palette: Deep Aerospace Titanium, Precision Arc-Cyan, Refined Gold & Crimson */
+  --bg-deep: #070a12;
+  --bg-surface: #0c121e;
+  --bg-elevated: #111a2c;
+  --bg-panel: rgba(12, 18, 30, 0.88);
+  --bg-card: rgba(17, 26, 44, 0.75);
+
+  --stark-cyan: #00e5ff;
+  --stark-cyan-soft: rgba(0, 229, 255, 0.12);
+  --stark-cyan-border: rgba(0, 229, 255, 0.28);
+  --stark-cyan-glow: rgba(0, 229, 255, 0.35);
+
+  --stark-gold: #f59e0b;
+  --stark-gold-soft: rgba(245, 158, 11, 0.12);
+  --stark-gold-border: rgba(245, 158, 11, 0.35);
+
+  --stark-crimson: #e11d48;
+  --stark-crimson-dark: #881337;
+  --stark-crimson-soft: rgba(225, 29, 72, 0.15);
+  --stark-crimson-glow: rgba(225, 29, 72, 0.4);
+
+  --stark-emerald: #10b981;
+  --stark-emerald-soft: rgba(16, 185, 129, 0.12);
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(0, 229, 255, 0.18);
+  --border-strong: rgba(0, 229, 255, 0.45);
+
+  --text-main: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-cyan: #00e5ff;
+  --text-gold: #fbbf24;
+
+  --font-display: 'Orbitron', -apple-system, sans-serif;
+  --font-interface: 'Rajdhani', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Share Tech Mono', monospace;
 }
 
 * {
   box-sizing: border-box;
 }
 
-body {
+html, body, #root {
+  height: 100vh;
+  max-height: 100vh;
   margin: 0;
   padding: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: var(--bg-primary);
-  background-image: 
-    radial-gradient(ellipse 90% 50% at 20% -10%, rgba(99, 102, 241, 0.13) 0%, transparent 65%),
-    radial-gradient(ellipse 60% 40% at 85% 15%, rgba(6, 182, 212, 0.09) 0%, transparent 55%),
-    radial-gradient(ellipse 70% 50% at 50% 110%, rgba(16, 185, 129, 0.07) 0%, transparent 65%);
-  background-attachment: fixed;
+  overflow: hidden;
+  background-color: var(--bg-deep);
+  font-family: var(--font-interface);
   color: var(--text-main);
   -webkit-font-smoothing: antialiased;
 }
 
-/* Glassmorphism panels */
-.glass-panel {
-  background: var(--bg-card);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+/* Subtle Aerospace Mesh & Atmospheric Glow */
+body {
+  background-image:
+    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(0, 229, 255, 0.09) 0%, transparent 60%),
+    radial-gradient(circle 450px at 95% 95%, rgba(225, 29, 72, 0.06) 0%, transparent 70%),
+    radial-gradient(circle 350px at 5% 90%, rgba(245, 158, 11, 0.05) 0%, transparent 70%),
+    linear-gradient(rgba(0, 229, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+  background-attachment: fixed;
+}
+
+/* Professional 3-Column Command Center Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 325px minmax(350px, 1fr) minmax(380px, 1.15fr);
+  gap: 12px;
+  align-items: stretch;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Professional Stark Command Panel */
+.stark-panel {
+  position: relative;
+  background: var(--bg-panel);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-medium);
+  border-radius: 8px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
-.glass-panel:hover {
-  border-color: var(--border-hover);
+.stark-panel:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 18px rgba(0, 229, 255, 0.08);
 }
 
-/* Custom scrollbars */
+/* Clean Professional HUD Panel Header */
+.panel-header {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border-medium);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, rgba(0, 229, 255, 0.06) 0%, rgba(12, 18, 30, 0.95) 100%);
+  flex-shrink: 0;
+}
+
+.panel-title {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--stark-cyan);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+
+/* Precision Scrollbars */
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(7, 10, 18, 0.7);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.14);
-  border-radius: 3px;
+  background: rgba(0, 229, 255, 0.28);
+  border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.28);
+  background: var(--stark-cyan);
 }
 
-/* Animation utilities */
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.8; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.03); }
+/* Arc Reactor Vector Animation */
+@keyframes arcCorePulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.6)) drop-shadow(0 0 16px rgba(0, 229, 255, 0.3));
+    opacity: 0.92;
+  }
+  50% {
+    filter: drop-shadow(0 0 14px rgba(0, 229, 255, 0.9)) drop-shadow(0 0 24px rgba(0, 229, 255, 0.5));
+    opacity: 1;
+  }
 }
 
-.pulsing-indicator {
-  animation: pulseGlow 1.8s infinite ease-in-out;
+@keyframes spinClockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-@keyframes highlightGlow {
-  0%, 100% { background-color: rgba(99, 102, 241, 0.16); }
-  50% { background-color: rgba(99, 102, 241, 0.32); }
+@keyframes spinCounter {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
 }
 
-.highlighted-record-row {
-  animation: highlightGlow 2.5s infinite ease-in-out;
+.arc-pulse {
+  animation: arcCorePulse 2.4s infinite ease-in-out;
 }
 
-/* Button & Interactive states */
-.btn-primary {
-  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+.spin-cw {
+  animation: spinClockwise 12s linear infinite;
+  transform-origin: center;
+}
+
+.spin-ccw {
+  animation: spinCounter 18s linear infinite;
+  transform-origin: center;
+}
+
+/* J.A.R.V.I.S. Audio Waveform Indicator */
+@keyframes soundwaveAnim {
+  0%, 100% { height: 3px; }
+  50% { height: 14px; }
+}
+
+.soundwave-bar {
+  width: 2.5px;
+  background: var(--stark-cyan);
+  border-radius: 1px;
+  animation: soundwaveAnim 1.1s infinite ease-in-out;
+}
+.soundwave-bar:nth-child(2) { animation-delay: 0.15s; }
+.soundwave-bar:nth-child(3) { animation-delay: 0.3s; }
+.soundwave-bar:nth-child(4) { animation-delay: 0.45s; }
+.soundwave-bar:nth-child(5) { animation-delay: 0.2s; }
+.soundwave-bar:nth-child(6) { animation-delay: 0.35s; }
+
+/* Primary Stark Action Button (Crimson Titanium & Arc Glow) */
+.btn-stark-primary {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #b91c1c 0%, #881337 50%, #4c0519 100%);
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 8px;
-  font-weight: 600;
+  border: 1px solid rgba(225, 29, 72, 0.5);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(185, 28, 28, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-.btn-primary:hover:not(:disabled) {
+.btn-stark-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #dc2626 0%, #9f1239 50%, #5c081e 100%);
+  border-color: #f43f5e;
+  box-shadow: 0 6px 22px rgba(225, 29, 72, 0.55), 0 0 12px rgba(245, 158, 11, 0.3);
   transform: translateY(-1px);
-  box-shadow: 0 6px 22px rgba(99, 102, 241, 0.5);
-  filter: brightness(1.06);
 }
 
-.btn-primary:active:not(:disabled) {
+.btn-stark-primary:active:not(:disabled) {
   transform: translateY(0);
 }
 
-/* Custom Animated Toggle Switch */
+/* Secondary Gold Button */
+.btn-stark-gold {
+  font-family: var(--font-interface);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--stark-gold);
+  border: 1px solid var(--stark-gold-border);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-stark-gold:hover:not(:disabled) {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: var(--stark-gold);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
+}
+
+/* Secondary Cyan Button */
+.btn-stark-cyan {
+  font-family: var(--font-interface);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(0, 229, 255, 0.08);
+  color: var(--stark-cyan);
+  border: 1px solid var(--stark-cyan-border);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+}
+
+.btn-stark-cyan:hover:not(:disabled) {
+  background: rgba(0, 229, 255, 0.18);
+  border-color: var(--stark-cyan);
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.25);
+}
+
+/* Professional Toggle Switch */
 .switch {
   position: relative;
   display: inline-block;
@@ -121,10 +290,10 @@ body {
   position: absolute;
   cursor: pointer;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(255, 255, 255, 0.14);
-  transition: 0.25s;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: 0.2s;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
 }
 .slider:before {
   position: absolute;
@@ -133,37 +302,50 @@ body {
   width: 12px;
   left: 2px;
   bottom: 2px;
-  background-color: #f1f5f9;
-  transition: 0.25s;
+  background-color: #94a3b8;
+  transition: 0.2s;
   border-radius: 50%;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
 }
 input:checked + .slider {
-  background-color: #6366f1;
-  border-color: #818cf8;
+  background-color: rgba(0, 229, 255, 0.22);
+  border-color: var(--stark-cyan);
 }
 input:checked + .slider:before {
   transform: translateX(16px);
+  background-color: var(--stark-cyan);
+  box-shadow: 0 0 6px var(--stark-cyan);
 }
 
-/* Enforce non-scrollable root page */
-html, body, #root {
-  height: 100vh;
-  max-height: 100vh;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+/* Precision HUD Status Badge */
+.status-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
-/* 3-Column Layout: Always strictly side-by-side in a single viewport */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 310px minmax(330px, 1fr) minmax(360px, 1.15fr);
-  gap: 12px;
-  align-items: stretch;
-  flex: 1;
-  min-height: 0;
-  height: 100%;
-  overflow: hidden;
+/* Live Radar Pulse */
+@keyframes radarBlink {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; transform: scale(1.1); }
 }
 
+.radar-dot {
+  animation: radarBlink 1.5s infinite ease-in-out;
+}
+
+/* Table Row Active Highlight */
+@keyframes rowActiveGlow {
+  0%, 100% { background-color: rgba(0, 229, 255, 0.06); }
+  50% { background-color: rgba(0, 229, 255, 0.14); }
+}
+
+.highlighted-row {
+  animation: rowActiveGlow 2.2s infinite ease-in-out;
+}
